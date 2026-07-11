@@ -2,6 +2,7 @@ package cl.duoc.ms_pacientes_bff.dto;
 
 import lombok.*;
 import java.util.List;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class PacienteConCitasDto {
     private String nombres;
     private String apellidos;
     private String sexo;
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String direccion;
     private String telefonoContacto;
     
