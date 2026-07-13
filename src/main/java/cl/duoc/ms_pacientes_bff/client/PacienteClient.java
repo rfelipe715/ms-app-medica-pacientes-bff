@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "ms-pacientes-bs", url = "localhost:8081/api/pacientes")
+@FeignClient(name = "ms-pacientes-bs", url = "${ms-pacientes-bs.url:http://localhost:8081/api/pacientes}")
 public interface PacienteClient {
 
     @PostMapping
