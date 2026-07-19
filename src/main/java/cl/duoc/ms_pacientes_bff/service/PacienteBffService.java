@@ -4,6 +4,8 @@ import cl.duoc.ms_pacientes_bff.client.PacienteClient;
 import cl.duoc.ms_pacientes_bff.client.CitasRestClient;
 import cl.duoc.ms_pacientes_bff.dto.PacienteBffDto;
 import cl.duoc.ms_pacientes_bff.dto.PacienteConCitasDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class PacienteBffService {
 
+    private static final Logger log = LoggerFactory.getLogger(PacienteBffService.class);
+
     @Autowired
     private PacienteClient pacienteClient;
 
@@ -20,6 +24,7 @@ public class PacienteBffService {
     private CitasRestClient citasRestClient;
 
     public PacienteBffDto registrarPaciente(PacienteBffDto dto) {
+        log.info("BFF: registrando paciente run={}", dto.getRun());
         return pacienteClient.registrarPaciente(dto);
     }
 
@@ -46,10 +51,12 @@ public class PacienteBffService {
     }
 
     public PacienteBffDto editarPaciente(Long id, PacienteBffDto datosNuevos) {
+        log.info("BFF: editando paciente id={}", id);
         return pacienteClient.editarPaciente(id, datosNuevos);
     }
 
     public void eliminarPaciente(Long id) {
+        log.info("BFF: eliminando paciente id={}", id);
         pacienteClient.eliminarPaciente(id);
     }
 
@@ -71,7 +78,7 @@ public class PacienteBffService {
                 .filter(c -> c.getPacienteId().equals(pacienteDto.getId()))
                 .collect(Collectors.toList()));
         } catch (Exception e) {
-            // Silenciar error si no encuentra citas
+            log.warn("No se pudieron obtener las citas del paciente id={}: {}", pacienteDto.getId(), e.getMessage());
         }
         
         return conCitas;
